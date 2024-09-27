@@ -23,7 +23,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                                 <NavLink to={"/Topseries"} className="nav-link text-light">Top Series</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink to={"/About"} className="nav-link text-light">About</NavLink>
+                                <NavLink to={"/About"} className="nav-link text-light">About </NavLink>
                             </li>
                         </ul>
                     </div>
