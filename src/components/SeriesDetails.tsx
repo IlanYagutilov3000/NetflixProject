@@ -1,8 +1,8 @@
-import { table } from "console";
-import { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import { REFUSED } from "dns";
+import { FunctionComponent, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-interface TopSeriesProps {
+interface SeriesDetailsProps {
 
 }
 
@@ -16,7 +16,7 @@ export interface Series {
     running: boolean;
 }
 
-const TopSeries: FunctionComponent<TopSeriesProps> = () => {
+const SeriesDetails: FunctionComponent<SeriesDetailsProps> = () => {
     const series: Series[] = [
         {
             rank: 1,
@@ -51,7 +51,7 @@ const TopSeries: FunctionComponent<TopSeriesProps> = () => {
             name: '13 Reasons Why',
             startYear: 2017,
             rate: 7.6,
-            description: 'Follows teenager Clay Jensen, in his quest to uncover the story behind his classmate and crush, Hannah, and her decision to end her life.',
+            description: 'Follows teenager Clay Jensen, in his quest to uncover the story behind his classNameNameNamemate and crush, Hannah, and her decision to end her life.',
             running: false
         },
         {
@@ -109,65 +109,35 @@ const TopSeries: FunctionComponent<TopSeriesProps> = () => {
             running: false
         },
     ];
+    const { rank } = useParams();
+    const seriesRank = Number(rank);
+    const selectedSeries = series.find(s => s.rank === seriesRank);
     return (
         <>
-            <div className="container">
-                {series.length ? (
-                    <table className="table text-center">
-                        <thead>
-                            <tr>
-                                <th>#Rank</th>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Strat Year</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {series.map((series) => (
-                                <tr key={series.rank}>
-                                    <td>{series.rank}</td>
-                                    <td><img src={series.img} alt={series.name} /></td>
-                                    <td><Link to={`/Topseries/${series.rank}`}>{series.name}</Link></td>
-                                    <td>{series.startYear}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                ) : (
-                    <p>No movies were found</p>
-                )};
+            <div className="card mb-3" style={{ maxWidth: "540px;" }}>
+                <div className="row g-0">
+                    <div className="col-md-4">
+                        <img src={selectedSeries?.img} className="img-fluid rounded-start" alt={selectedSeries?.name}/>
+                    </div>
+                    <div className="col-md-8">
+                        <div className="card-body">
+                            <h1 className="card-title">{selectedSeries?.name}</h1>
+                            <h5 className="card-title">Rank #{rank}</h5>
+                            <p className="card-text">{selectedSeries?.description}</p>
+                            <div className="card" style={{width: "18rem;"}}>
+                                <ul className="list-group list-group-flush">
+                                    <li className="list-group-item">Start Year: {selectedSeries?.startYear}</li>
+                                    <li className="list-group-item">Rate: {selectedSeries?.rate}</li>
+                                    <li className="list-group-item">Runing: {selectedSeries?.running ? (<span>Yes</span>) :(<span>No</span>)}
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>);
 }
 
-export default TopSeries;
-
-
-
-/* {photos.length ? (
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>Album id</th>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Thumbnail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {photos.map((photo: any) => (
-                        <tr key={photo.id}>
-                            <td>{photo.albumId}</td>
-                            <td>{photo.id}</td>
-                            <td>{photo.title}</td>
-                            <td>
-                                <img src={photo.thumbnailUrl} alt={photo.title} />
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        ) : (
-            <p>No photos</p>
-            {series.name}
-        )} */
+export default SeriesDetails;

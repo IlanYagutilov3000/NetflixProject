@@ -7,6 +7,7 @@ import Home from './components/Home';
 import TopSeries from './components/TopSeries';
 import About from './components/About';
 import PageNotFound from './components/PageNotFound';
+import SeriesDetails from './components/SeriesDetails';
 
 function App() {
   return (
@@ -15,7 +16,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />}/>
-          <Route path="/Topseries" element={<TopSeries />}/>
+          <Route path="/Topseries">
+            <Route index element={<TopSeries />}/>
+            <Route path=":rank" element={<SeriesDetails/>}/>
+          </Route>
           <Route path="/About" element={<About />}/>
           <Route path="*" element={<PageNotFound />}/>
         </Routes>
