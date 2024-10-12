@@ -1,11 +1,13 @@
 import { FunctionComponent } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 interface NavbarProps {
-
+    isLogged: boolean;
+    onLogout: () => void;
 }
 
-const Navbar: FunctionComponent<NavbarProps> = () => {
+const Navbar: FunctionComponent<NavbarProps> = ({ isLogged, onLogout }) => {
+    let navigate = useNavigate();
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-dark">
@@ -17,7 +19,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav nav-underline">
                             <li className="nav-item">
-                                <NavLink to={"/"} className="nav-link text-light">Home</NavLink>
+                                <NavLink to={"/home"} className="nav-link text-light">Home</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to={"/Topseries"} className="nav-link text-light">Top Series</NavLink>
@@ -26,6 +28,7 @@ const Navbar: FunctionComponent<NavbarProps> = () => {
                                 <NavLink to={"/About"} className="nav-link text-light">About </NavLink>
                             </li>
                         </ul>
+                        {isLogged && (<button className="ms-auto" onClick={() => { onLogout(); navigate("/") }}>Logout</button>)}
                     </div>
                 </div>
             </nav>
